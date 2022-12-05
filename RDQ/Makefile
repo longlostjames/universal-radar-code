@@ -6,9 +6,12 @@ ROOTPATH=.
 
 # This is where the bits and pieces are kept
 SRCDIR = $(ROOTPATH)/src
+INCDIR = $(ROOTPATH)/include
 LIBDIR = $(ROOTPATH)/lib
 BINDIR = $(ROOTPATH)/bin
-INCDIR = $(ROOTPATH)/include
+
+
+
 
 CC     = gcc
 CFLAGS = -Wall -O3 -ffast-math -I$(INCDIR)
@@ -18,7 +21,7 @@ LIBS   = -lm
 INC = $(INCDIR)/RDQ.h
 
 # Top level rule
-all : $(LIBDIR)/librdq12.a
+all : dirs $(LIBDIR)/librdq12.a
 
 # The main library
 $(LIBDIR)/librdq12.a : $(BINDIR)/RDQ_DataAcquisition.o
@@ -26,6 +29,10 @@ $(LIBDIR)/librdq12.a : $(BINDIR)/RDQ_DataAcquisition.o
 
 $(BINDIR)/RDQ_DataAcquisition.o : $(SRCDIR)/RDQ_DataAcquisition.c $(INC)
 	$(CC) $(CFLAGS) -o $@ -c $(SRCDIR)/RDQ_DataAcquisition.c
+	
+dirs:
+	[ -d $(LIBDIR) ] || mkdir -p $(LIBDIR)
+	[ -d $(BINDIR) ] || mkdir -p $(BINDIR)
 
 clean :
 	$(RM) $(BINDIR)/*.[doa]

@@ -18,7 +18,7 @@ LIBS   = -lfftw3 -lm
 INC = $(INCDIR)/RSP.h
 
 # Top level rule
-all : $(LIBDIR)/librsp.a
+all : dirs $(LIBDIR)/librsp.a
 
 # The main library
 $(LIBDIR)/librsp.a : $(BINDIR)/RSP_CalcSpecMom.o $(BINDIR)/RSP_FindPeaks.o \
@@ -62,6 +62,11 @@ $(BINDIR)/RSP_Correlate.o : $(SRCDIR)/RSP_Correlate.c $(INC)
 
 $(BINDIR)/RSP_ClutterInterp.o : $(SRCDIR)/RSP_ClutterInterp.c $(INC)
 	$(CC) $(CFLAGS) -o $@ -c $(SRCDIR)/RSP_ClutterInterp.c
+
+dirs:
+	[ -d $(LIBDIR) ] || mkdir -p $(LIBDIR)
+	[ -d $(BINDIR) ] || mkdir -p $(BINDIR)
+
 
 clean :
 	$(RM) $(BINDIR)/*.[doa]

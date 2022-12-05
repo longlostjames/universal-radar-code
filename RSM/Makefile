@@ -15,8 +15,8 @@ CFLAGS = -Wall -O3 -ffast-math -I$(INCDIR)
 LIBS   = -lm -lpthread -lrt
 
 # Top level rule
-all : $(LIBDIR)/librsm.a
-test: $(BINDIR)/RSM_PositionTest
+all : dirs $(LIBDIR)/librsm.a
+test: dirs $(BINDIR)/RSM_PositionTest
 
 # The main library
 $(LIBDIR)/librsm.a : $(BINDIR)/RSM_SerialMessage.o $(BINDIR)/RSM_SerialPLC.o \
@@ -32,6 +32,10 @@ $(BINDIR)/RSM_SerialPLC.o : $(SRCDIR)/RSM_SerialPLC.c $(INCDIR)/RSM_SerialPLC.h
 
 $(BINDIR)/RSM_NetworkMessage.o : $(SRCDIR)/RSM_NetworkMessage.c $(INCDIR)/RSM.h
 	$(CC) $(CFLAGS) -o $@ -c $(SRCDIR)/RSM_NetworkMessage.c
+	
+dirs:
+	[ -d $(LIBDIR) ] || mkdir -p $(LIBDIR)
+	[ -d $(BINDIR) ] || mkdir -p $(BINDIR)
 
 clean :
 	$(RM) $(BINDIR)/*.[doa]

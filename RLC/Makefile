@@ -18,7 +18,7 @@ LIBS   = -lm
 INC = $(INCDIR)/RLC.h
 
 # Top level rule
-all : $(LIBDIR)/librlc.a
+all : dirs $(LIBDIR)/librlc.a
 
 # The main library
 $(LIBDIR)/librlc.a : $(BINDIR)/RLC_ProgramLecroy.o
@@ -26,6 +26,10 @@ $(LIBDIR)/librlc.a : $(BINDIR)/RLC_ProgramLecroy.o
 
 $(BINDIR)/RLC_ProgramLecroy.o : $(SRCDIR)/RLC_ProgramLecroy.c $(INC)
 	$(CC) $(CFLAGS) -c $(SRCDIR)/RLC_ProgramLecroy.c -o $(BINDIR)/RLC_ProgramLecroy.o
+	
+dirs:
+	[ -d $(LIBDIR) ] || mkdir -p $(LIBDIR)
+	[ -d $(BINDIR) ] || mkdir -p $(BINDIR)
 
 clean :
 	$(RM) $(BINDIR)/RLC_ProgramLecroy.o

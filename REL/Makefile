@@ -18,7 +18,7 @@ LIBS   = -lm -lpthread -lrt
 INC = $(INCDIR)/REL.h
 
 # Top level rule
-all : $(LIBDIR)/librel.a
+all : dirs $(LIBDIR)/librel.a
 test: test_REL
 
 # The main library
@@ -30,6 +30,11 @@ $(BINDIR)/REL_SerialMessage.o : $(SRCDIR)/REL_SerialMessage.c $(INC)
 
 test_REL : $(SRCDIR)/test_REL.c $(SRCDIR)/REL_SerialMessage.c $(INC)
 	$(CC) $(CFLAGS) -o $@ $(SRCDIR)/test_REL.c $(BINDIR)/REL_SerialMessage.o $(LIBS)
+	
+dirs:
+	[ -d $(LIBDIR) ] || mkdir -p $(LIBDIR)
+	[ -d $(BINDIR) ] || mkdir -p $(BINDIR)
+	
 
 clean :
 	$(RM) $(BINDIR)/*.[doa]

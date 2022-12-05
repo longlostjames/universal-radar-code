@@ -18,7 +18,7 @@ LIBS   = -lm
 INC = $(INCDIR)/REN.h
 
 # Top level rule
-all : $(LIBDIR)/libren.a
+all : dirs $(LIBDIR)/libren.a
 
 # The main library
 $(LIBDIR)/libren.a : $(BINDIR)/REN_GpibEnet.o
@@ -26,6 +26,10 @@ $(LIBDIR)/libren.a : $(BINDIR)/REN_GpibEnet.o
 
 $(BINDIR)/REN_GpibEnet.o : $(SRCDIR)/REN_GpibEnet.c $(INC)
 	$(CC) $(CFLAGS) -o $@ -c $(SRCDIR)/REN_GpibEnet.c
+	
+dirs:
+	[ -d $(LIBDIR) ] || mkdir -p $(LIBDIR)
+	[ -d $(BINDIR) ] || mkdir -p $(BINDIR)
 
 clean :
 	$(RM) $(BINDIR)/REN_GpibEnet.o

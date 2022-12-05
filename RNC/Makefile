@@ -19,7 +19,7 @@ LIBS= -lm
 INC = $(INCDIR)/RNC.h
 
 # Top level rule
-all : $(LIBDIR)/librnc.a
+all : dirs $(LIBDIR)/librnc.a
 
 # The main library
 $(LIBDIR)/librnc.a : $(BINDIR)/RNC_NetCDF.o $(BINDIR)/RNC_ReadConfig.o
@@ -31,6 +31,10 @@ $(BINDIR)/RNC_NetCDF.o : $(SRCDIR)/RNC_NetCDF.c $(INC)
 
 $(BINDIR)/RNC_ReadConfig.o : $(SRCDIR)/RNC_ReadConfig.c $(INC)
 	$(CC) $(CFLAGS) -o $@ -c $(SRCDIR)/RNC_ReadConfig.c
+	
+dirs:
+	[ -d $(LIBDIR) ] || mkdir -p $(LIBDIR)
+	[ -d $(BINDIR) ] || mkdir -p $(BINDIR)
 
 clean :
 	$(RM) $(BINDIR)/*.[doa]
